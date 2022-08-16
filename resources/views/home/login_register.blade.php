@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-sm-4 pt-1 mt-md-0">
                                     <div class="forgotton-password_info">
-                                        <a href="#"> Forgotten pasward?</a>
+                                        <a href="{{ route('password.request') }}"> Lupa Password?</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 pt-5">

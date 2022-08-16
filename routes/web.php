@@ -9,6 +9,11 @@ use App\Http\Controllers\LaporanPenjualanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +39,53 @@ Route::post('/logout',[HomeController::class, 'logout'])->name('home.logout');
 Route::get('/login-register',[HomeController::class, 'login_register'])->name('home.login_register');
 Route::post('/login-register/login',[HomeController::class, 'login_register_post_login'])->name('home.postlogin');
 Route::post('/login-register/register',[HomeController::class, 'login_register_post_register'])->name('home.postregister');
+
+
+
+Route::get('/forgot-password', function () {
+    return view('home.forgot_password');
+})->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+
+    return $status === Password::RESET_LINK_SENT
+                ? back()->with(['success' => __($status)])
+                : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', function ($token) {
+    return view('home.reset_password', ['token' => $token, 'email' => request()->get("email")]);
+})->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password', function (Request $request) {
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|min:8|confirmed',
+    ]);
+
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function ($user, $password) {
+            $user->forceFill([
+                'password' => Hash::make($password)
+            ])->setRememberToken(Str::random(60));
+
+            $user->save();
+
+            event(new PasswordReset($user));
+        }
+    );
+
+    return $status === Password::PASSWORD_RESET
+                ? redirect()->route('home.login_register')->with('success', __($status))
+                : back()->withErrors(['email' => [__($status)]]);
+})->middleware('guest')->name('password.update');
 
 
 Route::get('/login',[AuthController::class, 'login'])->name('login');

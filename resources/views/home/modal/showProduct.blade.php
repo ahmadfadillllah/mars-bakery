@@ -82,7 +82,6 @@
                                 <div class="modal_description mb-15">
                                     <p>{{ $p->deskripsiproduk }}</p>
                                 </div>
-                                <div class="variants_selects">
                                     <div class="variants_size">
                                         <h2>Kategori: </h2>
                                     </div>
@@ -92,7 +91,6 @@
                                         <h2>Stok: </h2>
                                     </div>
                                     {{ $p->stokproduk }}
-                                </div>
                             </div>
                         </div>
                     </div>

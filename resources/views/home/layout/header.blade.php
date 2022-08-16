@@ -63,30 +63,30 @@
 
 <body>
 
-    @if (session('success'))
-        <script>
-            Swal.fire(
-            'Woow!',
-            '{{ session('success') }}',
-            'success'
-            )
-        </script>
-    @endif
 
-    @if (session('info'))
-        <script>
-            Swal.fire(
-            'Upps!',
-            '{{ session('info') }}',
-            'info'
-            )
-        </script>
-    @endif
 
 
     <!--offcanvas menu area start-->
     <div class="body_overlay">
+        @if (session('success'))
+            <script>
+                Swal.fire(
+                'Woow!',
+                '{{ session('success') }}',
+                'success'
+                )
+            </script>
+        @endif
 
+        @if (session('info'))
+            <script>
+                Swal.fire(
+                'Upps!',
+                '{{ session('info') }}',
+                'info'
+                )
+            </script>
+        @endif
     </div>
     <div class="offcanvas_menu">
         <div class="container">
