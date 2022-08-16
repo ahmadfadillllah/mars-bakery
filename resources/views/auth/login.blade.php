@@ -23,14 +23,30 @@
         <link href="{{ asset('admin') }}/assets/css/main.min.css" rel="stylesheet">
         <link href="{{ asset('admin') }}/assets/css/custom.css" rel="stylesheet">
 
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        {{-- SweetAlert2 --}}
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
+
     <body class="login-page">
+        @if (session('success'))
+        <script>
+            Swal.fire(
+            'Woow!',
+            '{{ session('success') }}',
+            'success'
+            )
+        </script>
+    @endif
+
+    @if (session('info'))
+        <script>
+            Swal.fire(
+            'Upps!',
+            '{{ session('info') }}',
+            'info'
+            )
+        </script>
+    @endif
         <div class='loader'>
             <div class='spinner-grow text-primary' role='status'>
               <span class='sr-only'>Loading...</span>
@@ -49,22 +65,32 @@
                                 <p>Please Sign-in to your account.</p>
                             </div>
 
-                            <form>
+                            <form action="{{ route('login.post') }}" method="POST">
+                                @csrf
                                 <div class="mb-3">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                        <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
                                         <label for="floatingInput">Email address</label>
                                       </div>
+                                      @error('email')
+                                          <div class="text">{{ $message }}</div>
+                                      @enderror
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                                        <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
                                         <label for="floatingPassword">Password</label>
                                       </div>
+                                      @error('password')
+                                          <div class="text">{{ $message }}</div>
+                                      @enderror
                                 </div>
                                 <div class="mb-3 form-check">
                                   <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                   <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                </div>
+                                <div class="mb-3">
+                                    <a href="{{ route('home.index') }}">Kembali</a>
                                 </div>
                                 <div class="d-grid">
                                 <button type="submit" class="btn btn-info m-b-xs">Sign In</button>

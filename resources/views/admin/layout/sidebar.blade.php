@@ -29,7 +29,7 @@
             <a href="{{ route('profil.index') }}"><i data-feather="user"></i>Profil</a>
         </li>
         <li>
-            <a href="#"><i data-feather="log-out"></i>Log Out</a>
+            <a href="{{ route('logout') }}"><i data-feather="log-out"></i>Log Out</a>
         </li>
     </ul>
 </div>

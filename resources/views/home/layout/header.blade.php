@@ -46,6 +46,9 @@
     <!--modernizr min js here-->
     <script src="{{ asset('home') }}/assets/js/vendor/modernizr-3.11.2.min.js"></script>
 
+    {{-- SweetAlert2 --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <!-- Structured Data  -->
     <script type="application/ld+json">
@@ -59,6 +62,26 @@
 </head>
 
 <body>
+
+    @if (session('success'))
+        <script>
+            Swal.fire(
+            'Woow!',
+            '{{ session('success') }}',
+            'success'
+            )
+        </script>
+    @endif
+
+    @if (session('info'))
+        <script>
+            Swal.fire(
+            'Upps!',
+            '{{ session('info') }}',
+            'info'
+            )
+        </script>
+    @endif
 
 
     <!--offcanvas menu area start-->
@@ -102,14 +125,14 @@
                             </div>
                             <div class="header_top_sidebar d-flex align-items-center">
                                 <ul class="d-flex">
-                                    <li><i class="icofont-envelope"></i> <a
-                                            href="mailto:demo@example.com">mulyadi@gmail.com</a></li>
-                                    <li class="account_link"> <i class="icofont-user-alt-7"></i><a href="#">Account</a>
-                                        <ul class="dropdown_account_link">
-                                            <li><a href="my-account.html">My Account</a></li>
-                                            <li><a href="{{ route('home.login_register') }}">Login</a></li>
-                                        </ul>
+                                    @if (auth()->user())
+                                    <li>
+                                        <i class="icofont-envelope"></i> <a href="#">{{ Auth::user()->name }}</a>
                                     </li>
+                                    <li><a href="{{ route('home.logout') }}">Log Out</a></li>
+                                    @else
+                                    <li><a href="{{ route('home.login_register') }}">Login / Register</a></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -139,9 +162,11 @@
                             <ul class="d-flex">
                                 <li class="header_search"><a href="javascript:void(0)"><i class="pe-7s-search"></i></a>
                                 </li>
-                                <li class="shopping_cart"><a href="javascript:void(0)"><i class="pe-7s-shopbag"></i></a>
-                                    <span class="item_count">2</span>
-                                </li>
+                                @if (auth()->user())
+                                    <li class="shopping_cart"><a href="javascript:void(0)"><i class="pe-7s-shopbag"></i></a>
+                                        <span class="item_count">2</span>
+                                    </li>
+                                @endif
                             </ul>
                             <div class="canvas_open">
                                 <a href="javascript:void(0)"><i class="ion-navicon"></i></a>

@@ -25,8 +25,33 @@
     <link href="{{ asset('admin') }}/assets/css/main.min.css" rel="stylesheet">
     <link href="{{ asset('admin') }}/assets/css/custom.css" rel="stylesheet">
 
+    {{-- SweetAlert2 --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </head>
 
 <body>
 
     <div class="page-container">
+    @if (session('success'))
+        <script>
+            Swal.fire(
+            'Woow!',
+            '{{ session('success') }}',
+            'success'
+            )
+        </script>
+    @endif
+
+    @if (session('info'))
+        <script>
+            Swal.fire(
+            'Upps!',
+            '{{ session('info') }}',
+            'info'
+            )
+        </script>
+    @endif
+
+

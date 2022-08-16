@@ -30,12 +30,12 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link profile-dropdown" href="#" id="profileDropDown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false"><img
-                            src="{{ asset('admin') }}/assets/images/avatars/profile-image.png" alt=""></a>
+                            src="{{ asset('admin') }}/assets/images/avatars/{{ Auth::user()->picture }}" alt="" style="border-radius: 100%"></a>
                     <div class="dropdown-menu dropdown-menu-end profile-drop-menu"
                         aria-labelledby="profileDropDown">
                         <a class="dropdown-item" href="{{ route('profil.index') }}"><i data-feather="user"></i>Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i data-feather="log-out"></i>Logout</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"><i data-feather="log-out"></i>Logout</a>
                     </div>
                 </li>
             </ul>

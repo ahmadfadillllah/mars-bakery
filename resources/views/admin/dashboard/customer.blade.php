@@ -19,15 +19,17 @@
                             </tr>
                           </thead>
                           <tbody>
+                            @foreach ($customer as $ct)
                             <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
+                              <th scope="row">{{ $loop->iteration }}</th>
+                              <td>{{ $ct->name }}</td>
+                              <td>{{ $ct->email }}</td>
+                              <td>{{ $loop->iteration }}</td>
                               <td>
                                 <button type="button" class="btn btn-outline-warning m-b-xs">Edit</button>
                               </td>
                             </tr>
+                            @endforeach
                           </tbody>
                         </table>
                     </div>
