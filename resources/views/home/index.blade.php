@@ -93,9 +93,14 @@
                                 <div class="action_links">
                                     <ul class="d-flex justify-content-center">
                                         @if (auth()->user())
-                                            <li class="add_to_cart"><a href="cart.html" title="Add to cart"> <span
-                                                class="pe-7s-shopbag"></span></a>
+                                        <form action="{{ route('cart.insert') }}" method="post">
+                                            @csrf
+                                            <li  class="add_to_cart">
+                                                <input type="text" name="user_id" value="{{ Auth::user()->id }}" hidden>
+                                                <input type="text" name="produk_id" value="{{ $p->id }}" hidden>
+                                                <button type="submit" class="btn btn-primary "><span class="pe-7s-shopbag"></span></button>
                                             </li>
+                                        </form>
                                         @endif
                                             <li class="quifck_button">
                                                 <a href="{{ route('home.show', $p->id) }}" title="Quick View" id="showProduk" data-id="$p->id" data-bs-toggle="modal"

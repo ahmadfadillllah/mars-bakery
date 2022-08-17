@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\KategoriProduk;
 use App\Models\Produk;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -17,7 +19,17 @@ class HomeController extends Controller
     {
         $kategori = KategoriProduk::all();
         $produk = Produk::with('produk')->get();
-        return view('home.index', compact('kategori', 'produk'));
+
+        $cart = Cart::join('produk', 'cart.produk_id','produk.id')
+        ->select('cart.id','produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
+        ->get();
+
+        $item = Cart::join('produk', 'cart.produk_id','produk.id')
+        ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
+        ->get();
+
+        $total = $item->sum('total_harga');
+        return view('home.index', compact('kategori', 'produk','cart', 'total'));
     }
 
     public function login_register_post_login(Request $request)
@@ -63,7 +75,6 @@ class HomeController extends Controller
     public function show($id)
     {
         $produk = Produk::where('id', $id)->with('produk')->get();
-        dd($produk);
     }
 
     public function logout(Request $request)
@@ -78,16 +89,49 @@ class HomeController extends Controller
     }
     public function about()
     {
-        return view('home.about');
+
+        $cart = Cart::join('produk', 'cart.produk_id','produk.id')
+        ->select('cart.id','produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
+        ->get();
+
+        $item = Cart::join('produk', 'cart.produk_id','produk.id')
+        ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
+        ->get();
+
+        $total = $item->sum('total_harga');
+
+        return view('home.about',compact('cart', 'total'));
     }
 
     public function contact()
     {
-        return view('home.contact');
+
+        $cart = Cart::join('produk', 'cart.produk_id','produk.id')
+        ->select('cart.id','produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
+        ->get();
+
+        $item = Cart::join('produk', 'cart.produk_id','produk.id')
+        ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
+        ->get();
+
+        $total = $item->sum('total_harga');
+
+        return view('home.contact', compact('cart', 'total'));
     }
 
     public function login_register()
     {
-        return view('home.login_register');
+
+        $cart = Cart::join('produk', 'cart.produk_id','produk.id')
+        ->select('cart.id','produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
+        ->get();
+
+        $item = Cart::join('produk', 'cart.produk_id','produk.id')
+        ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
+        ->get();
+
+        $total = $item->sum('total_harga');
+
+        return view('home.login_register', compact('cart', 'total'));
     }
 }

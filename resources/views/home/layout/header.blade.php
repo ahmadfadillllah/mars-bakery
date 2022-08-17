@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/ionicons.min.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/pe-icon-7-stroke.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/animate.css">
-    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/nice-select.css">
+    {{-- <link rel="stylesheet" href="{{ asset('home') }}/assets/css/nice-select.css"> --}}
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/magnific-popup.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/jquery-ui.min.css">
     <!-- Main Style CSS -->
@@ -48,24 +48,9 @@
 
     {{-- SweetAlert2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-    <!-- Structured Data  -->
-    <script type="application/ld+json">
-        {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Replace_with_your_site_title",
-        "url": "Replace_with_your_site_URL"
-        }
-    </script>
 </head>
 
 <body>
-
-
-
-
     <!--offcanvas menu area start-->
     <div class="body_overlay">
         @if (session('success'))
@@ -164,7 +149,7 @@
                                 </li>
                                 @if (auth()->user())
                                     <li class="shopping_cart"><a href="javascript:void(0)"><i class="pe-7s-shopbag"></i></a>
-                                        <span class="item_count">2</span>
+                                        <span class="item_count">{{ $cart->count() }}</span>
                                     </li>
                                 @endif
                             </ul>
@@ -189,46 +174,32 @@
                     <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
                 </div>
             </div>
+            @foreach ($cart as $c)
             <div class="cart_item">
                 <div class="cart_img">
-                    <a href="single-product.html"><img src="{{ asset('home') }}/assets/img/product/product1.png" alt=""></a>
+                    <a href="single-product.html"><img src="{{ asset('admin') }}/assets/images/{{ $c->gambarproduk1 }}" alt=""></a>
                 </div>
                 <div class="cart_info">
-                    <a href="single-product.html">Primis In Faucibus</a>
-                    <p>1 x <span> $65.00 </span></p>
+                    <a href="single-product.html">{{ $c->namaproduk }}</a>
+                    <p>{{ $c->quantity }} x <span>@currency($c->hargaproduk)</span></p>
                 </div>
                 <div class="cart_remove">
-                    <a href="#"><i class="ion-android-close"></i></a>
+                    <a href="{{ route('cart.delete', $c->id) }}" onclick="return confirm('Yakin Hapus?')"><i class="ion-android-close"></i></a>
                 </div>
             </div>
-            <div class="cart_item">
-                <div class="cart_img">
-                    <a href="single-product.html"><img src="{{ asset('home') }}/assets/img/product/product2.png" alt=""></a>
-                </div>
-                <div class="cart_info">
-                    <a href="single-product.html">Letraset Sheets</a>
-                    <p>1 x <span> $60.00 </span></p>
-                </div>
-                <div class="cart_remove">
-                    <a href="#"><i class="ion-android-close"></i></a>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="mini_cart_table">
             <div class="cart_table_border">
-                <div class="cart_total">
-                    <span>Sub total:</span>
-                    <span class="price">$125.00</span>
-                </div>
                 <div class="cart_total mt-10">
-                    <span>total:</span>
-                    <span class="price">$125.00</span>
+                    <span>Total:</span>
+                    <span class="price">@currency($total)</span>
                 </div>
             </div>
         </div>
         <div class="mini_cart_footer">
             <div class="cart_button">
-                <a href="cart.html">View cart</a>
+                <a href="{{ route('cart.index') }}">View cart</a>
             </div>
             <div class="cart_button">
                 <a href="checkout.html"><i class="fa fa-sign-in"></i> Checkout</a>

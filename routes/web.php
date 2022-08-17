@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -35,6 +36,11 @@ Route::get('/show/{id}',[HomeController::class, 'show'])->name('home.show');
 Route::get('/about',[HomeController::class, 'about'])->name('home.about');
 Route::get('/contact',[HomeController::class, 'contact'])->name('home.contact');
 Route::post('/logout',[HomeController::class, 'logout'])->name('home.logout');
+
+Route::post('/cart/insert',[CartController::class, 'insert'])->name('cart.insert');
+Route::get('/cart',[CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/update',[CartController::class, 'updatecart'])->name('cart.update');
+Route::get('/cart/delete/{id}',[CartController::class, 'deletecart'])->name('cart.delete');
 
 Route::get('/login-register',[HomeController::class, 'login_register'])->name('home.login_register');
 Route::post('/login-register/login',[HomeController::class, 'login_register_post_login'])->name('home.postlogin');

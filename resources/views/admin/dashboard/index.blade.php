@@ -8,7 +8,7 @@
                 <div class="card stat-widget">
                     <div class="card-body">
                         <h5 class="card-title">Pemberitahuan!</h5>
-                        <h6>Selamat datang Mulyadi, Silahkan menggunakan web ini dengan bijak!</h6>
+                        <h6>Selamat datang {{ Auth::user()->name }}, Silahkan menggunakan web ini dengan bijak!</h6>
                     </div>
                 </div>
             </div>
@@ -17,12 +17,12 @@
             <div class="col-md-6 col-xl-4">
                 <div class="card stat-widget">
                     <div class="card-body">
-                        <h5 class="card-title">New Customers</h5>
-                        <h2>132</h2>
+                        <h5 class="card-title">Customers</h5>
+                        <h2>{{ $user->count() }}</h2>
                         <p>From all register</p>
                         <div class="progress">
                             <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width: 25%"
-                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                aria-valuenow="{{ $user->count() }}" aria-valuemin="0" aria-valuemax="100">
                             </div>
                         </div>
                     </div>
@@ -31,12 +31,12 @@
             <div class="col-md-6 col-xl-4">
                 <div class="card stat-widget">
                     <div class="card-body">
-                        <h5 class="card-title">Orders</h5>
-                        <h2>287</h2>
-                        <p>Orders in checkout</p>
+                        <h5 class="card-title">Cart</h5>
+                        <h2>{{ $cart->count() }}</h2>
+                        <p>Total in Cart</p>
                         <div class="progress">
                             <div class="progress-bar bg-success progress-bar-striped" role="progressbar"
-                                style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                style="width: 50%" aria-valuenow="{{ $cart->count() }}" aria-valuemin="0" aria-valuemax="100">
                             </div>
                         </div>
                     </div>
