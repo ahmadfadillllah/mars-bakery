@@ -132,7 +132,6 @@
 
 <script type="text/javascript">
     // For example trigger on button clicked, or any time you need
-    let cart = [2,3];
     var payButton = document.getElementById('pay-button');
     payButton.addEventListener('click', function () {
       // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
