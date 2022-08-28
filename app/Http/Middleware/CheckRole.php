@@ -21,6 +21,6 @@ class CheckRole
             return $next($request);
         }
 
-        return redirect()->route('login')->with('info', 'Anda tidak memiliki hak akses');
+        return redirect()->route('home.login_register')->with('info', 'Anda tidak memiliki hak akses');
     }
 }

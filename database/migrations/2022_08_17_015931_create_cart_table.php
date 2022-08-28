@@ -18,7 +18,9 @@ class CreateCartTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('produk_id');
             $table->integer('quantity');
+            $table->string('status');
             $table->timestamps();
+
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('produk_id')->references('id')->on('produk');

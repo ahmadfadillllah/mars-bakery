@@ -98,7 +98,7 @@
                                         @currency($total)
                                     </span></li>
                                 </ul>
-                                <a href="#">Checkout</a>
+                                <a href="{{ route('checkout.index') }}">Checkout</a>
                             </div>
                         </div>
                     </div>

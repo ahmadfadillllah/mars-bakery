@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -31,22 +32,11 @@ use Illuminate\Auth\Events\PasswordReset;
 //     return view('welcome');
 // });
 
-Route::get('/',[HomeController::class, 'index'])->name('home.index');
-Route::get('/show/{id}',[HomeController::class, 'show'])->name('home.show');
-Route::get('/about',[HomeController::class, 'about'])->name('home.about');
-Route::get('/contact',[HomeController::class, 'contact'])->name('home.contact');
-Route::post('/logout',[HomeController::class, 'logout'])->name('home.logout');
 
-Route::post('/cart/insert',[CartController::class, 'insert'])->name('cart.insert');
-Route::get('/cart',[CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/update',[CartController::class, 'updatecart'])->name('cart.update');
-Route::get('/cart/delete/{id}',[CartController::class, 'deletecart'])->name('cart.delete');
-
-Route::get('/login-register',[HomeController::class, 'login_register'])->name('home.login_register');
-Route::post('/login-register/login',[HomeController::class, 'login_register_post_login'])->name('home.postlogin');
-Route::post('/login-register/register',[HomeController::class, 'login_register_post_register'])->name('home.postregister');
-
-
+    Route::post('/logout',[HomeController::class, 'logout'])->name('home.logout');
+    Route::get('/login-register',[HomeController::class, 'login_register'])->name('home.login_register');
+    Route::post('/login-register/login',[HomeController::class, 'login_register_post_login'])->name('home.postlogin');
+    Route::post('/login-register/register',[HomeController::class, 'login_register_post_register'])->name('home.postregister');
 
 Route::get('/forgot-password', function () {
     return view('home.forgot_password');
@@ -98,6 +88,25 @@ Route::get('/login',[AuthController::class, 'login'])->name('login');
 Route::post('/login/post',[AuthController::class, 'loginpost'])->name('login.post');
 
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
+
+Route::group(['middleware' => ['auth', 'checkRole:customer']], function(){
+    Route::get('/',[HomeController::class, 'index'])->name('home.index');
+    Route::get('/show/{id}',[HomeController::class, 'show'])->name('home.show');
+    Route::get('/about',[HomeController::class, 'about'])->name('home.about');
+    Route::get('/contact',[HomeController::class, 'contact'])->name('home.contact');
+
+
+    Route::get('/cart',[CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/insert',[CartController::class, 'insert'])->name('cart.insert');
+    Route::post('/cart/update',[CartController::class, 'updatecart'])->name('cart.update');
+    Route::get('/cart/delete/{id}',[CartController::class, 'deletecart'])->name('cart.delete');
+
+    Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/update',[CheckoutController::class, 'update'])->name('checkout.update');
+    Route::post('/checkout/proses',[CheckoutController::class, 'proses'])->name('checkout.proses');
+
+    Route::get('/pesanan',[CheckoutController::class, 'pesanan'])->name('pesanan.index');
+});
 
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
 

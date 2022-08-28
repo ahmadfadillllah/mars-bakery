@@ -3,7 +3,7 @@
     <div class="container">
         <div class="footer_bottom">
             <div class="copyright_right text-center">
-                <p> © 2022 <a href="{{ route('home.index') }}"> {{ env('APP_NAME') }}.</a>
+                <p> © 2022 <a href="{{ route('home.index') }}"> {{ config('app.name') }}.</a>
             </div>
         </div>
     </div>

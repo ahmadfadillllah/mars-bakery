@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{ env('APP_NAME') }} | Bakery Shop</title>
+    <title>{{ config('app.name') }} | Bakery Shop</title>
     <meta name="description"
         content="240+ Best Bootstrap Templates are available on this website. Find your template for your project compatible with the most popular HTML library in the world." />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,13 +31,14 @@
 
     <!-- CSS
     ========================= -->
+
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/slick.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/ionicons.min.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/pe-icon-7-stroke.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/animate.css">
-    {{-- <link rel="stylesheet" href="{{ asset('home') }}/assets/css/nice-select.css"> --}}
+
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/magnific-popup.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/jquery-ui.min.css">
     <!-- Main Style CSS -->
@@ -48,6 +49,10 @@
 
     {{-- SweetAlert2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="SB-Mid-client-YCHtULs46ydSA7tV"></script>
 </head>
 
 <body>
@@ -114,6 +119,7 @@
                                     <li>
                                         <i class="icofont-envelope"></i> <a href="#">{{ Auth::user()->name }}</a>
                                     </li>
+                                    <li><a href="{{ route('pesanan.index') }}">Pesanan Saya</a></li>
                                     <li><a href="{{ route('home.logout') }}">Log Out</a></li>
                                     @else
                                     <li><a href="{{ route('home.login_register') }}">Login / Register</a></li>
@@ -177,10 +183,10 @@
             @foreach ($cart as $c)
             <div class="cart_item">
                 <div class="cart_img">
-                    <a href="single-product.html"><img src="{{ asset('admin') }}/assets/images/{{ $c->gambarproduk1 }}" alt=""></a>
+                    <a href="javascript::void(0);"><img src="{{ asset('admin') }}/assets/images/{{ $c->gambarproduk1 }}" alt=""></a>
                 </div>
                 <div class="cart_info">
-                    <a href="single-product.html">{{ $c->namaproduk }}</a>
+                    <a href="javascript::void(0);">{{ $c->namaproduk }}</a>
                     <p>{{ $c->quantity }} x <span>@currency($c->hargaproduk)</span></p>
                 </div>
                 <div class="cart_remove">
@@ -199,10 +205,10 @@
         </div>
         <div class="mini_cart_footer">
             <div class="cart_button">
-                <a href="{{ route('cart.index') }}">View cart</a>
+                <a href="{{ route('cart.index') }}">Lihat Keranjang</a>
             </div>
             <div class="cart_button">
-                <a href="checkout.html"><i class="fa fa-sign-in"></i> Checkout</a>
+                <a href="{{ route('checkout.index') }}"><i class="fa fa-sign-in"></i> Checkout</a>
             </div>
         </div>
     </div>

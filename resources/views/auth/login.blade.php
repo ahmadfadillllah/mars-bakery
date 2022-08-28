@@ -10,7 +10,7 @@
         <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
         <!-- Title -->
-        <title>{{ env('APP_NAME') }} - Authentication</title>
+        <title>{{ config('app.name') }} - Authentication</title>
 
         <!-- Styles -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,800&display=swap" rel="stylesheet">
@@ -61,7 +61,7 @@
                                 <img src="{{ asset('admin') }}/assets/images/logo@2x.png" alt="">
                             </div>
                             <div class="authent-text">
-                                <p>Welcome to {{ env('APP_NAME') }}</p>
+                                <p>Welcome to {{ config('app.name') }}</p>
                                 <p>Please Sign-in to your account.</p>
                             </div>
 
