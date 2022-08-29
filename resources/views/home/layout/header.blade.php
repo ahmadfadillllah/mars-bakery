@@ -32,7 +32,7 @@
     <!-- CSS
     ========================= -->
 
-    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/vendor/bootstrap.min.css">
+    {{-- <link rel="stylesheet" href="{{ asset('home') }}/assets/css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/slick.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/ionicons.min.css">
@@ -41,11 +41,24 @@
 
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/magnific-popup.css">
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/jquery-ui.min.css">
-    <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{ asset('home') }}/assets/css/style.css">
 
+    <script src="{{ asset('home') }}/assets/js/vendor/modernizr-3.11.2.min.js"></script> --}}
+
+    <link rel="stylesheet" href="home/assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="home/assets/css/slick.css">
+    <link rel="stylesheet" href="home/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="home/assets/css/ionicons.min.css">
+    <link rel="stylesheet" href="home/assets/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="home/assets/css/animate.css">
+
+    <link rel="stylesheet" href="home/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="home/assets/css/jquery-ui.min.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="home/assets/css/style.css">
+
     <!--modernizr min js here-->
-    <script src="{{ asset('home') }}/assets/js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="home/assets/js/vendor/modernizr-3.11.2.min.js"></script>
 
     {{-- SweetAlert2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -180,7 +193,7 @@
                     <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
                 </div>
             </div>
-            @foreach ($cart as $c)
+            @foreach ($cart->where('status','Sedang Dipesan') as $c)
             <div class="cart_item">
                 <div class="cart_img">
                     <a href="javascript::void(0);"><img src="{{ asset('admin') }}/assets/images/{{ $c->gambarproduk1 }}" alt=""></a>
@@ -195,14 +208,25 @@
             </div>
             @endforeach
         </div>
-        <div class="mini_cart_table">
-            <div class="cart_table_border">
-                <div class="cart_total mt-10">
-                    <span>Total:</span>
-                    <span class="price">@currency($total)</span>
+        @if($cart->where('status','Sedang Dipesan') == null)
+            <div class="mini_cart_table">
+                <div class="cart_table_border">
+                    <div class="cart_total mt-10">
+                        <span>Total:</span>
+                        <span class="price">@currency('0')</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        @else
+            <div class="mini_cart_table">
+                <div class="cart_table_border">
+                    <div class="cart_total mt-10">
+                        <span>Total:</span>
+                        <span class="price">@currency($total)</span>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="mini_cart_footer">
             <div class="cart_button">
                 <a href="{{ route('cart.index') }}">Lihat Keranjang</a>

@@ -20,11 +20,16 @@ class CheckoutController extends Controller
         $cart = Cart::join('users', 'cart.user_id','users.id')
         ->join('produk', 'cart.produk_id','produk.id')
         ->select('cart.id','produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
-        ->where('cart.user_id', '=', Auth::user()->id)->get();
+        ->where('cart.user_id', '=', Auth::user()->id)->where('status','Belum Dipesan')->get();
+
+        $cartById = Cart::join('users', 'cart.user_id','users.id')
+        ->join('produk', 'cart.produk_id','produk.id')
+        ->select('cart.id as cart_id','produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
+        ->where('cart.user_id', '=', Auth::user()->id)->where('status','Belum Dipesan')->get()->pluck('cart_id');
 
         $item = Cart::join('produk', 'cart.produk_id','produk.id')
         ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
-        ->where('cart.user_id', '=', Auth::user()->id)->get();
+        ->where('cart.user_id', '=', Auth::user()->id)->where('status','Belum Dipesan')->get();
 
         $total = $item->sum('total_harga');
         // dd($total);
@@ -58,8 +63,7 @@ class CheckoutController extends Controller
 
         $token = \Midtrans\Snap::getSnapToken($params);
 
-
-        return view('home.checkout', compact('cart', 'total', 'token'));
+        return view('home.checkout', compact('cart', 'total', 'token', 'cartById'));
     }
 
     public function update(Request $request)
@@ -79,14 +83,22 @@ class CheckoutController extends Controller
     public function proses(Request $request)
     {
         try {
-            foreach($request->id as $key=>$value){
-                $cart = Cart::find($request->id[$key]);
-                $cart->status = 'Sudah dipesan';
+            foreach($request->idcart as $key=>$value){
+                $cart = Cart::find($request->idcart[$key]);
+                $cart->status = $request->status;
                 $cart->save();
             }
-            return redirect()->route('cart.index')->with('success', 'Pembayaran Berhasil');
+            return json_encode([
+                'status' => 'success',
+                'kode' => 200,
+                'dataCart' => $cart
+            ]);
         } catch (\Throwable $th) {
-            return redirect()->route('cart.index')->with(['info' => $th->getMessage()]);
+            return json_encode([
+                'status' => 'success',
+                'kode' => 500,
+                'message' => $cart
+            ]);
         }
     }
 
@@ -109,4 +121,35 @@ class CheckoutController extends Controller
 
         return view('home.pesanan', compact('cart', 'item', 'total'));
     }
+
+     public function konfirmasiPesanan(Request $request)
+    {
+        $cart = Cart::findOrFail($request->idPesanan);
+        $cart->status = 'Pesanan Dikonfirmasi';
+        $cart->save();
+
+        return back()->with("success", "Status Pesanan Diperbarui");
+
+    }
+
+     public function perjalanan(Request $request)
+    {
+        $cart = Cart::findOrFail($request->idPesanan);
+        $cart->status = 'Pesanan Dalam Perjalanan';
+        $cart->save();
+
+        return back()->with("success", "Status Pesanan Diperbarui");
+
+    }
+
+     public function pesananSelesai(Request $request)
+    {
+        $cart = Cart::findOrFail($request->idPesanan);
+        $cart->status = 'Pesanan Selesai';
+        $cart->save();
+
+        return back()->with("success", "Status Pesanan Diperbarui");
+
+    }
+
 }

@@ -33,6 +33,7 @@
                                     <th class="product-price">Harga</th>
                                     <th class="product-quantity">Quantity</th>
                                     <th class="product-subtotal">Total</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,13 +41,13 @@
                                     @foreach ($cart as $c)
                                     <input type="text" name="id[]" value="{{ $c->id }}" hidden>
                                     <tr>
-                                        @if ($c->status == 'Belum dipesan')
+                                        @if ($c->status == 'Belum Dipesan')
                                             <td class="product-name">
                                                 <div class="alert alert-warning" role="alert">
                                                 {{ $c->status }}
                                             </div>
                                             </td>
-                                        @elseif ($c->status == 'Sudah dipesan')
+                                        @elseif ($c->status == 'Sudah Dipesan')
                                             <td class="product-name">
                                                 <div class="alert alert-secondary" role="alert">
                                                 {{ $c->status }}
@@ -85,6 +86,7 @@
                                         </td>
                                         <td class="product-subtotal"><span class="amount">@currency($c->hargaproduk *
                                                 $c->quantity)</span></td>
+                                        
                                     </tr>
 
                                     @endforeach

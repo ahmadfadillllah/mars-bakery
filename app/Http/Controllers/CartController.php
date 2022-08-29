@@ -16,7 +16,7 @@ class CartController extends Controller
         $cart = Cart::join('users', 'cart.user_id','users.id')
         ->join('produk', 'cart.produk_id','produk.id')
         ->select('cart.id', 'cart.user_id', 'cart.status' ,'produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
-        ->where('cart.status', '=', 'Belum dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
+        ->where('cart.status', '=', 'Belum Dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
 
 
         if($cart->isEmpty()){
@@ -25,7 +25,7 @@ class CartController extends Controller
 
         $item = Cart::join('produk', 'cart.produk_id','produk.id')
         ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
-        ->where('cart.status', '=', 'Belum dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
+        ->where('cart.status', '=', 'Belum Dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
 
         $total = $item->sum('total_harga');
         // dd($total);
@@ -35,16 +35,18 @@ class CartController extends Controller
 
     public function insert(Request $request)
     {
-        if(Cart::exists('produk_id')){
+        $prod = Cart::where('produk_id',$request->produk_id)->where('status','Belum Dipesan')->where('user_id',$request->user_id)->get()->count();
+        if($prod == 1){
             return redirect()->route('home.index')->with('info', 'Barang sudah ada dikeranjang');
+        }else if ($prod == 0){
+            $cart = new Cart;
+            $cart->user_id = $request->user_id;
+            $cart->produk_id = $request->produk_id;
+            $cart->quantity = 1;
+            $cart->status = 'Belum Dipesan';
+            $cart->save();
         }
 
-        $cart = new Cart;
-        $cart->user_id = $request->user_id;
-        $cart->produk_id = $request->produk_id;
-        $cart->quantity = 1;
-        $cart->status = 'Belum dipesan';
-        $cart->save();
 
         if($cart){
             return redirect()->route('cart.index')->with('success', 'Berhasil masuk ke keranjang');

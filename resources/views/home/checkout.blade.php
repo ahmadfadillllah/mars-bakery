@@ -100,6 +100,7 @@
                                 <tbody>
                                     @foreach ($cart as $ct)
                                     <tr class="cart-item">
+                                        {{-- <input type="hidden" value="{{ $ct->id }}" class="idct" name="idct"> --}}
                                         <td class="cart-product-name"> {{ $ct->namaproduk }}<strong
                                                 class="product-quantity">
                                                 × {{ $ct->quantity }}</strong></td>
@@ -129,21 +130,44 @@
             </div>
     </div>
 </div>
+<input type="hidden" name="_token" value="{{ csrf_token() }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script type="text/javascript">
-    // For example trigger on button clicked, or any time you need
+    
     var payButton = document.getElementById('pay-button');
     payButton.addEventListener('click', function () {
-      // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
+      // Trigger snap popup. @TODO: Replace TRANSACTIO  N_TOKEN_HERE with your transaction token
       window.snap.pay('{{ $token }}', {
         onSuccess: function(result){
           /* You may add your own implementation here */
         //   alert("payment success!"); console.log(result);
-          Swal.fire(
-                'Sukses',
-                'Pembayaran berhasil',
-                'success'
-                )
+            let dataId = @json($cartById);
+            console.log(dataId);
+
+            var status = "Sudah Dipesan"
+            var data = { status: status,idcart :dataId }; 
+            console.log(data);
+            var dataType = "json"; 
+            var headers = { "X-CSRF-TOKEN": $('input[name="_token"]').val()};
+            $.ajax({
+                type: "POST",
+                url: '{{route("checkout.proses")}}', 
+                data: data,
+                headers: headers,
+                success: function(data, status) {
+                    var data = data;
+                    Swal.fire(
+                    'Sukses',
+                    'Pembayaran berhasil,Silahkan Cek status Pesanan Anda anda',
+                    'success'
+                    )
+                console.log(data);
+                window.location = "/cart";
+                },
+                dataType: dataType
+            });
+         
         },
         onPending: function(result){
           /* You may add your own implementation here */

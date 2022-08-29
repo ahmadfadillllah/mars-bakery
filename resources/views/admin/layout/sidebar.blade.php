@@ -19,6 +19,9 @@
             <a href="{{ route('customer.index') }}"><i data-feather="user-plus"></i>Customer</a>
         </li>
         <li>
+            <a href="{{ route('pemesanan-list') }}"><i data-feather="user-plus"></i>Pesanan</a>
+        </li>
+        <li>
             <a href="{{ route('laporanpenjualan.index') }}"><i data-feather="edit"></i>Laporan Penjualan</a>
         </li>
 

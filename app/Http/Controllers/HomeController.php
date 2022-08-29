@@ -23,12 +23,12 @@ class HomeController extends Controller
         $cart = Cart::join('users', 'cart.user_id','users.id')
         ->join('produk', 'cart.produk_id','produk.id')
         ->select('cart.id', 'cart.user_id', 'cart.status' ,'produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
-        ->where('cart.status', '=', 'Belum dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
+        ->where('cart.status', '=', 'Belum Dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
 
         $item = Cart::join('users', 'cart.user_id','users.id')
         ->join('produk', 'cart.produk_id','produk.id')
         ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
-        ->where('cart.status', '=', 'Belum dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
+        ->where('cart.status', '=', 'Belum Dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
 
         $total = $item->sum('total_harga');
         return view('home.index', compact('kategori', 'produk','cart', 'total'));
@@ -95,12 +95,12 @@ class HomeController extends Controller
         $cart = Cart::join('users', 'cart.user_id','users.id')
         ->join('produk', 'cart.produk_id','produk.id')
         ->select('cart.id', 'cart.user_id', 'cart.status' ,'produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
-        ->where('cart.status', '=', 'Belum dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
+        ->where('cart.status', '=', 'Belum Dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
 
         $item = Cart::join('users', 'cart.user_id','users.id')
         ->join('produk', 'cart.produk_id','produk.id')
         ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
-        ->where('cart.status', '=', 'Belum dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
+        ->where('cart.status', '=', 'Belum Dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
 
         $total = $item->sum('total_harga');
 
@@ -142,4 +142,25 @@ class HomeController extends Controller
 
         return view('home.login_register', compact('cart', 'total'));
     }
+
+
+    public function pemesananList()
+    {
+        $cart = Cart::join('users', 'cart.user_id','users.id')
+        ->join('produk', 'cart.produk_id','produk.id')
+        ->select('cart.id', 'cart.user_id', 'cart.status' ,'produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
+        ->where('cart.status', '!=', 'Belum dipesan')->get();
+        // dd($cart);
+        
+        $item = Cart::join('produk', 'cart.produk_id','produk.id')
+        ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
+        ->get();
+
+        $user = User::get();
+        $total = $item->sum('total_harga');
+
+        return view('admin.pemesanan',compact('cart','total','user'));
+    }
+
+  
 }

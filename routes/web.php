@@ -106,6 +106,7 @@ Route::group(['middleware' => ['auth', 'checkRole:customer']], function(){
     Route::post('/checkout/proses',[CheckoutController::class, 'proses'])->name('checkout.proses');
 
     Route::get('/pesanan',[CheckoutController::class, 'pesanan'])->name('pesanan.index');
+
 });
 
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
@@ -131,5 +132,12 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
     Route::get('/dashboard/profil',[ProfilController::class, 'index'])->name('profil.index');
     Route::post('/dashboard/profil/change-password',[ProfilController::class, 'changepassword'])->name('profil.changepassword');
     Route::post('/dashboard/profil/change-picture',[ProfilController::class, 'changepicture'])->name('profil.changepicture');
+
+    Route::get('/pemesanan-list',[HomeController::class, 'pemesananList'])->name('pemesanan-list');
+
+    Route::post('/konfirmasi-pesanan',[CheckoutController::class, 'konfirmasiPesanan'])->name('konfirmasi-pesanan');
+    Route::post('/dalam-perjalanan',[CheckoutController::class, 'perjalanan'])->name('dalam-perjalanan');
+    Route::post('/selesai',[CheckoutController::class, 'pesananSelesai'])->name('selesai');
+
 });
 
