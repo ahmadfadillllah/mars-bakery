@@ -163,7 +163,7 @@
                     'success'
                     )
                 console.log(data);
-                window.location = "/cart";
+                window.location = "/";
                 },
                 dataType: dataType
             });
