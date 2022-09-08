@@ -14,6 +14,23 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     //
+    public function homepage(){
+        $kategori = KategoriProduk::all();
+        $produk = Produk::with('produk')->get();
+
+        $cart = Cart::join('users', 'cart.user_id','users.id')
+        ->join('produk', 'cart.produk_id','produk.id')
+        ->select('cart.id', 'cart.user_id', 'cart.status' ,'produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
+        ->where('cart.status', '=', 'Belum Dipesan')->get();
+
+        $item = Cart::join('users', 'cart.user_id','users.id')
+        ->join('produk', 'cart.produk_id','produk.id')
+        ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
+        ->where('cart.status', '=', 'Belum Dipesan')->get();
+
+        $total = $item->sum('total_harga');
+        return view('home.homepage', compact('kategori', 'produk','cart', 'total'));
+    }
 
     public function index()
     {
@@ -33,6 +50,7 @@ class HomeController extends Controller
         $total = $item->sum('total_harga');
         return view('home.index', compact('kategori', 'produk','cart', 'total'));
     }
+
 
     public function login_register_post_login(Request $request)
     {

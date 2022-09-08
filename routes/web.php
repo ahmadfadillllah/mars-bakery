@@ -33,6 +33,11 @@ use Illuminate\Auth\Events\PasswordReset;
 //     return view('welcome');
 // });
 
+Route::get('/', function () {
+    return redirect()->route('home.hompeage');
+});
+    Route::get('/homepage',[HomeController::class, 'homepage'])->name('home.hompeage');
+
 
     Route::post('/logout',[HomeController::class, 'logout'])->name('home.logout');
     Route::get('/login-register',[HomeController::class, 'login_register'])->name('home.login_register');
@@ -91,7 +96,7 @@ Route::post('/login/post',[AuthController::class, 'loginpost'])->name('login.pos
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth', 'checkRole:customer']], function(){
-    Route::get('/',[HomeController::class, 'index'])->name('home.index');
+    Route::get('/homepage-show',[HomeController::class, 'index'])->name('home.index');
     Route::get('/show/{id}',[HomeController::class, 'show'])->name('home.show');
     Route::get('/about',[HomeController::class, 'about'])->name('home.about');
     Route::get('/contact',[HomeController::class, 'contact'])->name('home.contact');
