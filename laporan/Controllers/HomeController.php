@@ -56,7 +56,7 @@ class HomeController extends Controller
     public function login_register_post_register(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
@@ -151,7 +151,7 @@ class HomeController extends Controller
         ->select('cart.id', 'cart.user_id', 'cart.status' ,'produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
         ->where('cart.status', '!=', 'Belum dipesan')->get();
         // dd($cart);
-        
+
         $item = Cart::join('produk', 'cart.produk_id','produk.id')
         ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
         ->get();
@@ -162,5 +162,5 @@ class HomeController extends Controller
         return view('admin.pemesanan',compact('cart','total','user'));
     }
 
-  
+
 }

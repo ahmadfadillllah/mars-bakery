@@ -95,7 +95,7 @@ Route::post('/login/post',[AuthController::class, 'loginpost'])->name('login.pos
 
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => ['auth', 'checkRole:customer']], function(){
+Route::group(['middleware' => ['auth', 'checkRole:customer,admin']], function(){
     Route::get('/homepage-show',[HomeController::class, 'index'])->name('home.index');
     Route::get('/show/{id}',[HomeController::class, 'show'])->name('home.show');
     Route::get('/about',[HomeController::class, 'about'])->name('home.about');
