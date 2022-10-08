@@ -21,7 +21,7 @@ class CartController extends Controller
 
 
         if($cart->isEmpty()){
-            return redirect()->route('cart.index')->with('info', 'Keranjang Masih Kosong');
+            return redirect()->route('customer.index')->with('info', 'Keranjang Masih Kosong');
         }
 
         $item = Cart::join('produk', 'cart.produk_id','produk.id')
@@ -38,7 +38,7 @@ class CartController extends Controller
     {
         $prod = Cart::where('produk_id',$request->produk_id)->where('status','Belum Dipesan')->where('user_id',$request->user_id)->get()->count();
         if($prod == 1){
-            return redirect()->route('home.index')->with('info', 'Barang sudah ada dikeranjang');
+            return redirect()->route('customer.index')->with('info', 'Barang sudah ada dikeranjang');
         }else if ($prod == 0){
             $cart = new Cart;
             $cart->user_id = $request->user_id;
