@@ -94,7 +94,7 @@
                                     <ul class="d-flex justify-content-center">
                                         {{-- @if (auth()->user()) --}}
                                             <li  class="add_to_cart">
-                                                <button type="submit" class="btn btn-primary " onclick="cart()"><span class="pe-7s-shopbag"></span></button>
+                                                <button type="submit" class="btn btn-primary "><span class="pe-7s-shopbag"></span></button>
                                             </li>
                                         {{-- @endif --}}
                                             <li class="quifck_button">
