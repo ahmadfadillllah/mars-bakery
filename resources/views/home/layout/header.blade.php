@@ -124,7 +124,7 @@
                     <div class="col-12">
                         <div class="header_top_inner d-flex justify-content-between">
                             <div class="welcome_text">
-                                <p>World Wide Completely Free Returns and Free Shipping</p>
+                                <p>Fakultas Ilmu Komputer | Universitas Muslim Indonesia</p>
                             </div>
                             <div class="header_top_sidebar d-flex align-items-center">
                                 <ul class="d-flex">
@@ -157,16 +157,16 @@
                                 <nav>
                                     <ul class="d-flex">
                                         <li><a href="{{ route('customer.index') }}">Home</a></li>
-                                        <li><a href="{{ route('customer.about') }}">About</a></li>
-                                        <li><a href="{{ route('customer.contact') }}">Contact</a></li>
+                                        <li><a href="{{ route('customer.about') }}">Tentang</a></li>
+                                        <li><a href="{{ route('customer.contact') }}">Kontak</a></li>
                                     </ul>
                                 </nav>
                             @else
                             <nav>
                                 <ul class="d-flex">
                                     <li><a href="{{ route('home.index') }}">Home</a></li>
-                                    <li><a href="{{ route('home.about') }}">About</a></li>
-                                    <li><a href="{{ route('home.contact') }}">Contact</a></li>
+                                    <li><a href="{{ route('home.about') }}">Tentang</a></li>
+                                    <li><a href="{{ route('home.contact') }}">Kontak</a></li>
                                 </ul>
                             </nav>
                             @endif

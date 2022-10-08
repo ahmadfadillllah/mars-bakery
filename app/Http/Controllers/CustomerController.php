@@ -14,7 +14,7 @@ class CustomerController extends Controller
     public function index()
     {
         $kategori = KategoriProduk::all();
-        $produk = Produk::with('produk')->get();
+        $produk = Produk::with('produk')->where('stokproduk', '>=', '1')->get();
 
         $cart = Cart::join('users', 'cart.user_id','users.id')
         ->join('produk', 'cart.produk_id','produk.id')

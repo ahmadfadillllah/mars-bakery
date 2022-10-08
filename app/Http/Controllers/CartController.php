@@ -16,7 +16,7 @@ class CartController extends Controller
 
         $cart = Cart::join('users', 'cart.user_id','users.id')
         ->join('produk', 'cart.produk_id','produk.id')
-        ->select('cart.id', 'cart.produk_id', 'cart.user_id', 'cart.status' ,'produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity', 'produk.stokproduk')
+        ->select('cart.id', 'cart.user_id', 'cart.status' ,'produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity', 'produk.stokproduk')
         ->where('cart.status', '=', 'Belum Dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
 
 
@@ -60,8 +60,7 @@ class CartController extends Controller
     {
         try {
             foreach($request->id as $key=>$value){
-                $produk = Cart::find($request->produk_id[$key]);
-                if($request->produk_id[$key] > $produk->stokproduk){
+                if($request->quantity[$key] > $request->stokproduk[$key]){
                     return redirect()->route('cart.index')->with('info', 'Barang melebihi stok');
                 }
                 $cart = Cart::find($request->id[$key]);

@@ -24,27 +24,26 @@
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
                         <div class="contact_info_content">
-                            <h2>We Are Here Fro Help You!
-                                Please Contact Us.</h2>
+                            <h2>Kami siap membantu anda
+                                Kontak Kami</h2>
                             <div class="contact_info_details mb-45">
-                                <h3>Store In New Work</h3>
-                                <p>Your address goes here.</p>
-                                <p><a href="tel:0123456789">0123456789</a></p>
-                                <p><a href="#">demo@example.com</a></p>
-                                <p><a href="#">www.example.com</a></p>
-                                <span>See On The Map</span>
+                                <h3>Fakultas Ilmu Komputer</h3>
+                                <p>Universitas Muslim Indonesia</p>
+                                <p><a href="tel:0123456789">+62853-4206-9274</a></p>
+                                <p><a href="#">admin@</a></p>
+                                <span>Lihat Maps</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-5 col-md-6">
                         <div class="contact_form" data-bgimg="assets/img/others/contact-form-bg-shape.png">
-                            <h2>Send A Quest</h2>
+                            <h2>Kirim Pertanyaan</h2>
                             <form id="contact-form" action="https://whizthemes.com/mail-php/other/mail.php">
                                 <div class="form_input">
-                                    <input name="con_name" placeholder="Name*" type="text">
+                                    <input name="con_name" value="{{ Auth::user()->name }}" type="text" readonly>
                                 </div>
                                 <div class="form_input">
-                                    <input name="con_email" placeholder="E-Mail*" type="text">
+                                    <input name="con_email" value="{{ Auth::user()->email }}" type="text" readonly>
                                 </div>
                                 <div class="form_input">
                                     <input name="con_subject" placeholder="Subject" type="text">
@@ -53,7 +52,7 @@
                                     <textarea name="con_message" placeholder="Message Hare"></textarea>
                                 </div>
                                 <div class="form_input_btn">
-                                    <button type="submit" class="btn btn-link">send message</button>
+                                    <button type="submit" class="btn btn-link">Kirim Pesan</button>
                                 </div>
                                 <p class="form-message"></p>
                             </form>

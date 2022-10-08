@@ -39,7 +39,6 @@
 
                                     @foreach ($cart as $c)
                                     <input type="number" name="id[]" value="{{ $c->id }}" hidden>
-                                    <input type="number" name="produk_id[]" value="{{ $c->produk_id }}" hidden>
                                     <input type="number" name="stokproduk[]" value="{{ $c->stokproduk }}" hidden>
                                     <tr>
                                         <td class="product_remove">
