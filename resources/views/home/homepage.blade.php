@@ -92,11 +92,11 @@
                                 <a href="#"><img src="{{ asset('admin') }}/assets/images/{{ $p->gambarproduk1 }}" width="50px" alt=""></a>
                                 <div class="action_links">
                                     <ul class="d-flex justify-content-center">
-                                        {{-- @if (auth()->user()) --}}
+                                        @if (auth()->user())
                                             <li  class="add_to_cart">
                                                 <button type="submit" class="btn btn-primary"><span class="pe-7s-shopbag"></span></button>
                                             </li>
-                                        {{-- @endif --}}
+                                        @endif
                                             <li class="quifck_button">
                                                 <a href="{{ route('home.show', $p->id) }}" title="Quick View" id="showProduk" data-id="$p->id" data-bs-toggle="modal"
                                                     data-bs-target="#modal_box{{ $p->id }}">
