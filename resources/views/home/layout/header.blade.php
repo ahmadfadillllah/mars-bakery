@@ -61,7 +61,7 @@
     <script src="{{ asset('home') }}/assets/js/vendor/modernizr-3.11.2.min.js"></script>
 
     {{-- SweetAlert2 --}}
-    <script src="https:////cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript"
       src="https://app.midtrans.com/snap/snap.js"
