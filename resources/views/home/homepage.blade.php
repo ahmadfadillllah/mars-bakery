@@ -94,7 +94,7 @@
                                     <ul class="d-flex justify-content-center">
                                         {{-- @if (auth()->user()) --}}
                                             <li  class="add_to_cart">
-                                                <button type="submit" class="btn btn-primary "><span class="pe-7s-shopbag"></span></button>
+                                                <button type="submit" class="btn btn-primary"><span class="pe-7s-shopbag"></span></button>
                                             </li>
                                         {{-- @endif --}}
                                             <li class="quifck_button">
@@ -123,22 +123,4 @@
     @foreach ($produk as $p)
     @include('home.modal.showProduct')
     @endforeach
-    <!-- product section end -->
-    <script>
-        function cart(){
-            Swal.fire({
-                title: 'Anda Belum Login',
-                text: "Silahkan Login Dahulu Untuk memasukkan ke keranjang",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Login'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                   window.location = "route('home.index')"
-                }
-            })
-        }
-    </script>
 @include('home.layout.footer')

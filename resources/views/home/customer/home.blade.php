@@ -92,11 +92,14 @@
                                 <a href="#"><img src="{{ asset('admin') }}/assets/images/{{ $p->gambarproduk1 }}" width="50px" alt=""></a>
                                 <div class="action_links">
                                     <ul class="d-flex justify-content-center">
-                                        {{-- @if (auth()->user()) --}}
+                                        <form action="{{ route('cart.insert') }}" method="post">
+                                            @csrf
                                             <li  class="add_to_cart">
+                                                <input type="text" name="user_id" value="{{ Auth::user()->id }}" hidden>
+                                                <input type="text" name="produk_id" value="{{ $p->id }}" hidden>
                                                 <button type="submit" class="btn btn-primary "><span class="pe-7s-shopbag"></span></button>
                                             </li>
-                                        {{-- @endif --}}
+                                        </form>
                                             <li class="quifck_button">
                                                 <a href="{{ route('home.show', $p->id) }}" title="Quick View" id="showProduk" data-id="$p->id" data-bs-toggle="modal"
                                                     data-bs-target="#modal_box{{ $p->id }}">
@@ -124,21 +127,4 @@
     @include('home.modal.showProduct')
     @endforeach
     <!-- product section end -->
-    <script>
-        function cart(){
-            Swal.fire({
-                title: 'Anda Belum Login',
-                text: "Silahkan Login Dahulu Untuk memasukkan ke keranjang",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Login'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                   window.location = "route('home.index')"
-                }
-            })
-        }
-    </script>
 @include('home.layout.footer')
