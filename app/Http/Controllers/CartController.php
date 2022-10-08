@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -57,10 +58,10 @@ class CartController extends Controller
 
     public function updatecart(Request $request)
     {
-        $cartt = Cart::all();
+        $produk = Produk::all();
         try {
             foreach($request->id as $key=>$value){
-                if($request->quantity[$key] > $cartt->quantity){
+                if($request->quantity[$key] > $produk->stokproduk){
                     return redirect()->route('cart.index')->with('info', 'Barang melebihi stok');
                 }
                 $cart = Cart::find($request->id[$key]);
