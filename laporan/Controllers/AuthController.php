@@ -40,6 +40,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('home.login_register');
+        return redirect()->route('home.index');
     }
 }
