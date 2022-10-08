@@ -100,7 +100,7 @@ Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth', 'checkRole:customer,admin']], function(){
     Route::get('/customer/homepage',[CustomerController::class, 'index'])->name('customer.index');
-    Route::get('/customer/about',[CustomerController::class, 'about'])->name('customer.about');
+    Route::get('/customer/about', [CustomerController::class, 'about'])->name('customer.about');
     Route::get('/customer/contact',[CustomerController::class, 'contact'])->name('customer.contact');
 
     Route::get('/customer/cart',[CartController::class, 'index'])->name('cart.index');

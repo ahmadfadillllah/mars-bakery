@@ -23,6 +23,7 @@ class CartController extends Controller
         if($cart->isEmpty()){
             return redirect()->route('home.index')->with('info', 'Keranjang Masih Kosong');
         }
+        dd($cart);
 
         $item = Cart::join('produk', 'cart.produk_id','produk.id')
         ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
@@ -58,9 +59,9 @@ class CartController extends Controller
 
     public function updatecart(Request $request)
     {
-        $produk = Produk::all();
         try {
             foreach($request->id as $key=>$value){
+                $produk = Cart::find($request->produk_id[$key]);
                 if($request->quantity[$key] > $produk->stokproduk){
                     return redirect()->route('cart.index')->with('info', 'Barang melebihi stok');
                 }

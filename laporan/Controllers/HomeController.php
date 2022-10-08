@@ -101,19 +101,11 @@ class HomeController extends Controller
     public function contact()
     {
 
-        $cart = Cart::join('users', 'cart.user_id','users.id')
-        ->join('produk', 'cart.produk_id','produk.id')
-        ->select('cart.id', 'cart.user_id', 'cart.status' ,'produk.gambarproduk1', 'produk.namaproduk', 'produk.hargaproduk', 'cart.quantity')
-        ->where('cart.status', '=', 'Belum dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
-
-        $item = Cart::join('users', 'cart.user_id','users.id')
-        ->join('produk', 'cart.produk_id','produk.id')
-        ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
-        ->where('cart.status', '=', 'Belum dipesan')->where('cart.user_id', '=', Auth::user()->id)->get();
-
-        $total = $item->sum('total_harga');
-
-        return view('home.contact', compact('cart', 'total'));
+        if(Auth::user()){
+            return redirect()->route('customer.contact');
+        }else{
+            return view('home.contact');
+        }
     }
 
     public function login_register()

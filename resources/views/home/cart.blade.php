@@ -39,6 +39,7 @@
 
                                     @foreach ($cart as $c)
                                     <input type="text" name="id[]" value="{{ $c->id }}" hidden>
+                                    <input type="text" name="produk_id[]" value="{{ $c->produk_id }}" hidden>
                                     <tr>
                                         <td class="product_remove">
                                             <a href="{{ route('cart.delete', $c->id) }}" onclick="return confirm('Yakin Hapus?')"">
