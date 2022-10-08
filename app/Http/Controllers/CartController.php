@@ -23,7 +23,6 @@ class CartController extends Controller
         if($cart->isEmpty()){
             return redirect()->route('home.index')->with('info', 'Keranjang Masih Kosong');
         }
-        dd($cart);
 
         $item = Cart::join('produk', 'cart.produk_id','produk.id')
         ->select(DB::raw('produk.hargaproduk * cart.quantity as total_harga'))
