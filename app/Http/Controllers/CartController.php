@@ -21,7 +21,7 @@ class CartController extends Controller
 
 
         if($cart->isEmpty()){
-            return redirect()->route('customer.index')->with('info', 'Keranjang Masih Kosong');
+            return redirect()->route('cart.index')->with('info', 'Keranjang Masih Kosong');
         }
 
         $item = Cart::join('produk', 'cart.produk_id','produk.id')
