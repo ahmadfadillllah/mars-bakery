@@ -34,15 +34,18 @@ use Illuminate\Auth\Events\PasswordReset;
 // });
 
 Route::get('/', function () {
-    return redirect()->route('home.hompeage');
+    return redirect()->route('home.index');
 });
-    Route::get('/homepage',[HomeController::class, 'homepage'])->name('home.hompeage');
 
+Route::get('/homepage',[HomeController::class, 'homepage'])->name('home.index');
+Route::get('/show/{id}',[HomeController::class, 'show'])->name('home.show');
+Route::get('/about',[HomeController::class, 'about'])->name('home.about');
+Route::get('/contact',[HomeController::class, 'contact'])->name('home.contact');
 
-    Route::post('/logout',[HomeController::class, 'logout'])->name('home.logout');
-    Route::get('/login-register',[HomeController::class, 'login_register'])->name('home.login_register');
-    Route::post('/login-register/login',[HomeController::class, 'login_register_post_login'])->name('home.postlogin');
-    Route::post('/login-register/register',[HomeController::class, 'login_register_post_register'])->name('home.postregister');
+Route::post('/logout',[HomeController::class, 'logout'])->name('home.logout');
+Route::get('/login-register',[HomeController::class, 'login_register'])->name('home.login_register');
+Route::post('/login-register/login',[HomeController::class, 'login_register_post_login'])->name('home.postlogin');
+Route::post('/login-register/register',[HomeController::class, 'login_register_post_register'])->name('home.postregister');
 
 Route::get('/forgot-password', function () {
     return view('home.forgot_password');
@@ -96,22 +99,20 @@ Route::post('/login/post',[AuthController::class, 'loginpost'])->name('login.pos
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth', 'checkRole:customer,admin']], function(){
-    Route::get('/homepage-show',[HomeController::class, 'index'])->name('home.index');
-    Route::get('/show/{id}',[HomeController::class, 'show'])->name('home.show');
-    Route::get('/about',[HomeController::class, 'about'])->name('home.about');
-    Route::get('/contact',[HomeController::class, 'contact'])->name('home.contact');
+    Route::get('/customer/homepage',[CustomerController::class, 'index'])->name('customer.index');
+    Route::get('/customer/about',[CustomerController::class, 'about'])->name('customer.about');
+    Route::get('/customer/contact',[CustomerController::class, 'contact'])->name('customer.contact');
 
+    Route::get('/customer/cart',[CartController::class, 'index'])->name('cart.index');
+    Route::post('/customer/cart/insert',[CartController::class, 'insert'])->name('cart.insert');
+    Route::post('/customer/cart/update',[CartController::class, 'updatecart'])->name('cart.update');
+    Route::get('/customer/cart/delete/{id}',[CartController::class, 'deletecart'])->name('cart.delete');
 
-    Route::get('/cart',[CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/insert',[CartController::class, 'insert'])->name('cart.insert');
-    Route::post('/cart/update',[CartController::class, 'updatecart'])->name('cart.update');
-    Route::get('/cart/delete/{id}',[CartController::class, 'deletecart'])->name('cart.delete');
+    Route::get('/customer/checkout',[CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/customer/checkout/update',[CheckoutController::class, 'update'])->name('checkout.update');
+    Route::post('/customer/checkout/proses',[CheckoutController::class, 'proses'])->name('checkout.proses');
 
-    Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout/update',[CheckoutController::class, 'update'])->name('checkout.update');
-    Route::post('/checkout/proses',[CheckoutController::class, 'proses'])->name('checkout.proses');
-
-    Route::get('/pesanan',[CheckoutController::class, 'pesanan'])->name('pesanan.index');
+    Route::get('/customer/pesanan',[CheckoutController::class, 'pesanan'])->name('pesanan.index');
 
 });
 
@@ -130,8 +131,6 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
     Route::get('/dashboard/produk/edit/{id}',[ProdukController::class, 'edit'])->name('produk.edit');
     Route::post('/dashboard/produk/update/{id}',[ProdukController::class, 'update'])->name('produk.update');
     Route::get('/dashboard/produk/delete/{id}',[ProdukController::class, 'delete'])->name('produk.delete');
-
-    Route::get('/dashboard/customer',[CustomerController::class, 'index'])->name('customer.index');
 
     Route::get('/dashboard/laporan-penjualan',[LaporanPenjualanController::class, 'index'])->name('laporanpenjualan.index');
 

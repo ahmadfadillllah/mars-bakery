@@ -45,27 +45,27 @@
 
     <script src="{{ asset('home') }}/assets/js/vendor/modernizr-3.11.2.min.js"></script> --}}
 
-    <link rel="stylesheet" href="home/assets/css/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="home/assets/css/slick.css">
-    <link rel="stylesheet" href="home/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="home/assets/css/ionicons.min.css">
-    <link rel="stylesheet" href="home/assets/css/pe-icon-7-stroke.css">
-    <link rel="stylesheet" href="home/assets/css/animate.css">
+    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/slick.css">
+    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/animate.css">
 
-    <link rel="stylesheet" href="home/assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="home/assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/jquery-ui.min.css">
     <!-- Main Style CSS -->
-    <link rel="stylesheet" href="home/assets/css/style.css">
+    <link rel="stylesheet" href="{{ asset('home') }}/assets/css/style.css">
 
     <!--modernizr min js here-->
-    <script src="home/assets/js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="{{ asset('home') }}/assets/js/vendor/modernizr-3.11.2.min.js"></script>
 
     {{-- SweetAlert2 --}}
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https:////cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript"
-      src="https://app.sandbox.midtrans.com/snap/snap.js"
-      data-client-key="SB-Mid-client-YCHtULs46ydSA7tV"></script>
+      src="https://app.midtrans.com/snap/snap.js"
+      data-client-key="Mid-client-eDlpumo34Ky7XHE6"></script>
 </head>
 
 <body>
@@ -153,6 +153,15 @@
                         </div>
                         <!--main menu start-->
                         <div class="main_menu d-none d-lg-block">
+                            @if (Auth::user())
+                                <nav>
+                                    <ul class="d-flex">
+                                        <li><a href="{{ route('customer.index') }}">Home</a></li>
+                                        <li><a href="{{ route('customer.about') }}">About</a></li>
+                                        <li><a href="{{ route('customer.contact') }}">Contact</a></li>
+                                    </ul>
+                                </nav>
+                            @else
                             <nav>
                                 <ul class="d-flex">
                                     <li><a href="{{ route('home.index') }}">Home</a></li>
@@ -160,6 +169,7 @@
                                     <li><a href="{{ route('home.contact') }}">Contact</a></li>
                                 </ul>
                             </nav>
+                            @endif
                         </div>
                         <!--main menu end-->
                         <div class="header_account">
@@ -193,6 +203,7 @@
                     <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
                 </div>
             </div>
+            @auth
             @foreach ($cart->where('status','Sedang Dipesan') as $c)
             <div class="cart_item">
                 <div class="cart_img">
@@ -207,26 +218,29 @@
                 </div>
             </div>
             @endforeach
+            @endauth
         </div>
+        @auth
         @if($cart->where('status','Sedang Dipesan') == null)
-            <div class="mini_cart_table">
-                <div class="cart_table_border">
-                    <div class="cart_total mt-10">
-                        <span>Total:</span>
-                        <span class="price">@currency('0')</span>
-                    </div>
+        <div class="mini_cart_table">
+            <div class="cart_table_border">
+                <div class="cart_total mt-10">
+                    <span>Total:</span>
+                    <span class="price">@currency('0')</span>
                 </div>
             </div>
-        @else
-            <div class="mini_cart_table">
-                <div class="cart_table_border">
-                    <div class="cart_total mt-10">
-                        <span>Total:</span>
-                        <span class="price">@currency($total)</span>
-                    </div>
+        </div>
+    @else
+        <div class="mini_cart_table">
+            <div class="cart_table_border">
+                <div class="cart_total mt-10">
+                    <span>Total:</span>
+                    <span class="price">@currency($total)</span>
                 </div>
             </div>
-        @endif
+        </div>
+    @endif
+        @endauth
         <div class="mini_cart_footer">
             <div class="cart_button">
                 <a href="{{ route('cart.index') }}">Lihat Keranjang</a>
