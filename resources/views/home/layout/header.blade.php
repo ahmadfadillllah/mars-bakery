@@ -204,42 +204,45 @@
                 </div>
             </div>
             @if (Auth::user())
-            @foreach ($cart->where('status','Sedang Dipesan') as $c)
-            <div class="cart_item">
-                <div class="cart_img">
-                    <a href="javascript::void(0);"><img src="{{ asset('admin') }}/assets/images/{{ $c->gambarproduk1 }}" alt=""></a>
+                @if($cart->where('status','Sedang Dipesan') == null)
+                @else
+                @foreach ($cart as $c)
+                <div class="cart_item">
+                    <div class="cart_img">
+                        <a href="javascript::void(0);"><img src="{{ asset('admin') }}/assets/images/{{ $c->gambarproduk1 }}" alt=""></a>
+                    </div>
+                    <div class="cart_info">
+                        <a href="javascript::void(0);">{{ $c->namaproduk }}</a>
+                        <p>{{ $c->quantity }} x <span>@currency($c->hargaproduk)</span></p>
+                    </div>
+                    <div class="cart_remove">
+                        <a href="{{ route('cart.delete', $c->id) }}" onclick="return confirm('Yakin Hapus?')"><i class="ion-android-close"></i></a>
+                    </div>
                 </div>
-                <div class="cart_info">
-                    <a href="javascript::void(0);">{{ $c->namaproduk }}</a>
-                    <p>{{ $c->quantity }} x <span>@currency($c->hargaproduk)</span></p>
-                </div>
-                <div class="cart_remove">
-                    <a href="{{ route('cart.delete', $c->id) }}" onclick="return confirm('Yakin Hapus?')"><i class="ion-android-close"></i></a>
-                </div>
-            </div>
-            @endforeach
+                @endforeach
+                @endif
             @endif
         </div>
         @if (Auth::user())
-        @if($cart->where('status','Sedang Dipesan') == null)
-        <div class="mini_cart_table">
-            <div class="cart_table_border">
-                <div class="cart_total mt-10">
-                    <span>Total:</span>
-                    <span class="price">@currency('0')</span>
+            @if($cart->where('status','Sedang Dipesan') == null)
+                <div class="mini_cart_table">
+                    <div class="cart_table_border">
+                        <div class="cart_total mt-10">
+                            <span>Total:</span>
+                            <span class="price">@currency('0')</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    @else
-        <div class="mini_cart_table">
-            <div class="cart_table_border">
-                <div class="cart_total mt-10">
-                    <span>Total:</span>
-                    <span class="price">@currency($total)</span>
+            @else
+                <div class="mini_cart_table">
+                    <div class="cart_table_border">
+                        <div class="cart_total mt-10">
+                            <span>Total:</span>
+                            <span class="price">@currency($total)</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    @endif
+            @endif
         @endif
         <div class="mini_cart_footer">
             <div class="cart_button">
