@@ -136,7 +136,7 @@
                 confirmButtonText: 'Login'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                   window.location = "/login-register"
+                   window.location = "route('home.index')"
                 }
             })
         }
