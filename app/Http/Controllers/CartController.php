@@ -57,8 +57,12 @@ class CartController extends Controller
 
     public function updatecart(Request $request)
     {
+        $cartt = Cart::all();
         try {
             foreach($request->id as $key=>$value){
+                if($request->quantity[$key] > $cartt->quantity){
+                    return redirect()->route('cart.index')->with('info', 'Barang melebihi stok');
+                }
                 $cart = Cart::find($request->id[$key]);
                 $cart->quantity = $request->quantity[$key];
                 $cart->save();
