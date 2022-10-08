@@ -203,7 +203,7 @@
                     <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
                 </div>
             </div>
-            @auth
+            @if (Auth::user())
             @foreach ($cart->where('status','Sedang Dipesan') as $c)
             <div class="cart_item">
                 <div class="cart_img">
@@ -218,9 +218,9 @@
                 </div>
             </div>
             @endforeach
-            @endauth
+            @endif
         </div>
-        @auth
+        @if (Auth::user())
         @if($cart->where('status','Sedang Dipesan') == null)
         <div class="mini_cart_table">
             <div class="cart_table_border">
@@ -240,7 +240,7 @@
             </div>
         </div>
     @endif
-        @endauth
+        @endif
         <div class="mini_cart_footer">
             <div class="cart_button">
                 <a href="{{ route('cart.index') }}">Lihat Keranjang</a>
