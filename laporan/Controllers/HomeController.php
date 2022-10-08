@@ -56,7 +56,7 @@ class HomeController extends Controller
     public function login_register_post_register(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
