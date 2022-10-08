@@ -204,8 +204,6 @@
                 </div>
             </div>
             @if (Auth::user())
-                @if($cart->where('status','Sedang Dipesan') == null)
-                @else
                 @foreach ($cart as $c)
                 <div class="cart_item">
                     <div class="cart_img">
@@ -220,7 +218,6 @@
                     </div>
                 </div>
                 @endforeach
-                @endif
             @endif
         </div>
         @if (Auth::user())
