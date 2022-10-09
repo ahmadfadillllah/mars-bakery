@@ -45,9 +45,8 @@
             <div class="col-md-6 col-xl-4">
                 <div class="card stat-widget">
                     <div class="card-body">
-                        <h5 class="card-title">Monthly Profit</h5>
-                        <h2>7.4K</h2>
-                        <p>For all orders</p>
+                        <h5 class="card-title">Waktu</h5>
+                        <h2 id="jam"></h2>
                         <div class="progress">
                             <div class="progress-bar bg-danger progress-bar-striped" role="progressbar"
                                 style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
@@ -58,6 +57,25 @@
             </div>
         </div>
     </div>
-
 </div>
+<script type="text/javascript">
+    window.onload = function() { jam(); }
+
+    function jam() {
+        var e = document.getElementById('jam'),
+        d = new Date(), h, m, s;
+        h = d.getHours();
+        m = set(d.getMinutes());
+        s = set(d.getSeconds());
+
+        e.innerHTML = h +':'+ m +':'+ s;
+
+        setTimeout('jam()', 1000);
+    }
+
+    function set(e) {
+        e = e < 10 ? '0'+ e : e;
+        return e;
+    }
+</script>
 @include('admin.layout.footer')

@@ -15,7 +15,7 @@
                               <th scope="col">Nama</th>
                               <th scope="col">Email</th>
                               <th scope="col">Jumlah Order</th>
-                              <th scope="col">Aksi</th>
+                              {{-- <th scope="col">Aksi</th> --}}
                             </tr>
                           </thead>
                           <tbody>
@@ -25,9 +25,9 @@
                               <td>{{ $ct->name }}</td>
                               <td>{{ $ct->email }}</td>
                               <td>{{ $loop->iteration }}</td>
-                              <td>
+                              {{-- <td>
                                 <button type="button" class="btn btn-outline-warning m-b-xs">Edit</button>
-                              </td>
+                              </td> --}}
                             </tr>
                             @endforeach
                           </tbody>

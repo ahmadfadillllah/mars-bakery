@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\KategoriProduk;
 use App\Models\Produk;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,5 +82,11 @@ class CustomerController extends Controller
         }else{
             return redirect()->route('home.index')->with('info', 'Anda Belum Login');
         }
+    }
+
+    public function list()
+    {
+        $customer = User::where('role', 'customer')->get();
+        return view('admin.dashboard.customer', compact('customer'));
     }
 }

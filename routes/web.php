@@ -120,6 +120,8 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
 
     Route::get('/dashboard/index',[DashboardController::class, 'index'])->name('dashboard.index');
 
+    Route::get('/dashboard/customer',[CustomerController::class, 'list'])->name('customer.list');
+
     Route::get('/dashboard/kategori',[KategoriController::class, 'index'])->name('kategori.index');
     Route::post('/dashboard/kategori/insert',[KategoriController::class, 'insert'])->name('kategori.insert');
     Route::get('/dashboard/kategori/edit/{id}',[KategoriController::class, 'edit'])->name('kategori.edit');
