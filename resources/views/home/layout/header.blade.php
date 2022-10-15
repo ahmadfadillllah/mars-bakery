@@ -64,8 +64,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript"
-      src="https://app.midtrans.com/snap/snap.js"
-      data-client-key="Mid-client-eDlpumo34Ky7XHE6"></script>
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="SB-Mid-client-YCHtULs46ydSA7tV"></script>
 </head>
 
 <body>
